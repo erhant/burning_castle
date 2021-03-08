@@ -9,3 +9,5 @@ do {
     a := 10 * a  
 } while a != |2a - 1|
 ```
+
+Since the decimal operations are imprecise, we use integers instead in our code, treating the right side as a big number.
