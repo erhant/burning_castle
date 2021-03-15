@@ -1,8 +1,8 @@
-# 🔥 Burning Towers Sequence 🔥
+# 🔥 Burning Tower Sequence 🔥
 This repository includes the code to obtain the Burning Towers Sequence.
 
 ## Initial Idea
-Denote the [unit interval](https://en.wikipedia.org/wiki/Unit_interval) of real numbers `[0, 1]` as `I`. Consider the following recursive algorithm:
+Consider the following algorithm:
 ```python
 def f(x):
   while (x < 0.1):
@@ -33,7 +33,7 @@ def f(x):
     f(x_new)
 ```
 
-The only problem here is when `x=0`, because it will loop like `0 -> 10 -> ...` which is not supposed to happen, instead we want `0 -> 1`. So when we come to `0` we can just go to `1` and terminate.
+The only problem here is when `x=0`, because it will loop like `0 -> 10 -> ...` which is not supposed to happen, instead we want `0 -> 1`. So when we come to `0` we can just go to `1` and terminate. Also note that there is no task of "eliminating prepending zeros" because the integer can't start with a zero.
 
 Looking at the same examples above:
 - `2 -> 6 -> 2` (2 unique values)
@@ -42,7 +42,7 @@ Looking at the same examples above:
 
 
 ## Will it always terminate?
-**Yes.** Take for example the integer algorithm explained just above, when we start with a value `x`, the results of the function are upperbounded by `100 * num_digits(x)`. So eventually, all numbers will be seen, it is trivial! We are more interested in what that number is.
+**Yes.** Take for example the integer algorithm explained just above, when we start with a value `x`, the results of the function are upperbounded by `100 * num_digits(x)`. So eventually, all numbers will be seen, it is trivial! We are more interested in _what that number is_.
 
 # Burning Tower Number
 Let us define the actual _Burning Tower Number_ for a given value: it is the number of unique seen values as we iterate through the function. 
@@ -58,7 +58,7 @@ To make this an integer-to-integer sequence we can look at it as:
 - `12 ==> 6`
 
 ## Plots
-The name _Burning Towers_ comes from the plots of this function from integers to integers. It seems as if there are a few towers that are on fire 🔥!
+The name _Burning Tower_ comes from the plots of this function from integers to integers. It seems as if there are a towers that are on fire 🔥!
 
 Up to 5,000:
 
