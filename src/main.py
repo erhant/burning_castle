@@ -72,10 +72,15 @@ def compute(x, verbose=False):
   return seens
  
 
-def compute_all(upto, start=0, plot=True):
+def compute_all(upto, start=0, plot=True, create_b_file=False):
   '''
-  Computes the sequence upto the given number. 
+  Computes the sequence upto the given number. You can change the starting value with start kwarg.
+
+  Set plot=True to see the results in a plot. 
+  
+  Set create_b_file=True to save the result to a b_file, refer to OEIS for more info.
   '''
+  assert(start >= 0)
   assert(start < upto)
   X = range(start, upto+1)
   Y = [compute_optim(x) for x in X]
@@ -88,8 +93,14 @@ def compute_all(upto, start=0, plot=True):
     ax.set_ylabel("Number of Unique Values") 
     plt.show() 
 
-  return Y
+  if create_b_file:
+    # b_file is for OEIS. It is a file
+    towrite = '\n'.join([str(x) + " " + str(y) for x, y in zip(X, Y)])
+    f = open("out/BT_"+str(start)+"_"+str(upto)+".txt","w") 
+    f.write(towrite) 
+    f.close() 
+
 
 if __name__ == "__main__":
-  #compute_all(25000)
-  compute(794, verbose=True)
+  compute_all(100000, plot=True, create_b_file=True)
+  #compute(794, verbose=True)
