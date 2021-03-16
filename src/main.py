@@ -67,8 +67,8 @@ def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: boo
     ax = plt.axes()
     ax.scatter(X, Y, c='black')
     ax.set_title("Burning Castle Sequence")
-    ax.set_xlabel("Starting Number")
-    ax.set_ylabel("Number of Unique Values") 
+    ax.set_xlabel("Number")
+    ax.set_ylabel("Iterations") 
     plt.show() 
 
   if create_b_file:
