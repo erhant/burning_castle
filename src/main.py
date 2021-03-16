@@ -1,29 +1,45 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rcParams 
 rcParams.update({'figure.autolayout': True})
+  
 
-SEQUENCE_NAME = "Burning Castle Sequence" 
- 
 def compute_verbose(x: int) -> int:
   '''
-  This is the most verbose version. It can show you the progression.
+  This is the most verbose version. It can show you the progression. 
+  
+  This does not include the simulation for 1.0
   ''' 
-  seens = {} # this is our dictionary, stored whether we have seen a number or not
-  x = int(str(x).strip())    
+  assert(x >= 0)
+  if (x == 0):
+    print("0 -> 1 -> 1\n2 values seen.")    
+    return 2
+  elif x == 5 or (str(x)[0] == '5' and int(str(x)[1:]) == 0):
+    # 500...0
+    print(x,"-> 0 -> 1 -> 1\n3 values seen.")
+    return 3
+
+  seens = {} # this is our dictionary, stored whether we have seen a number or not 
   while  x not in seens: 
     seens[x] = True 
     print(x, "->", end=" ")    
-    x = abs((x << 1) - (10 ** len(str(x))))
-    x = int(str(x).strip())
+    x = abs((x << 1) - (10 ** len(str(x)))) 
  
   print(str(x)+"\n"+str(len(seens))+" values seen.") 
   return len(seens)
 
-def compute(x : int): 
+def compute(x : int) -> int: 
   '''
   Simplest version using dictionary.  
+
+  This does not include the simulation for 1.0
   ''' 
+  assert(x >= 0)
+  if (x == 0): 
+    return 2
+  elif x == 5 or (str(x)[0] == '5' and int(str(x)[1:]) == 0):
+    # 500...0 
+    return 3
+
   seens = {}  
   while x not in seens:  
     seens[x] = True
@@ -31,7 +47,7 @@ def compute(x : int):
   return len(seens)
  
 
-def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: bool = False, func = compute):
+def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: bool = False):
   '''
   Computes the sequence upto the given number. You can change the starting value with start kwarg.
 
@@ -43,13 +59,14 @@ def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: boo
   '''
   assert(start >= 0)
   assert(start < upto)
+    
   X = range(start, upto+1)
-  Y = [func(x) for x in X]
+  Y = [compute(x) for x in X]
   
   if plot:
     ax = plt.axes()
     ax.scatter(X, Y, c='black')
-    ax.set_title(SEQUENCE_NAME)
+    ax.set_title("Burning Castle Sequence")
     ax.set_xlabel("Starting Number")
     ax.set_ylabel("Number of Unique Values") 
     plt.show() 
@@ -64,6 +81,5 @@ def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: boo
   return Y
 
 if __name__ == "__main__":
-  compute_all(50000000, plot=True, func=compute) 
-  #compute_verbose(100)
-  #print(compute(1000))
+  compute_all(1000000, plot=True) 
+  #compute_verbose(5000)
