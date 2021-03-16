@@ -38,6 +38,7 @@ Looking at the same examples above:
 - `5 -> 0 -> 1 -> 1` (3 unique values)
 - `12 -> 76 -> 52 -> 4 -> 2 -> 6 -> 2` (6 unique values)
 
+We should also note that the occurences of appended 0s are not a problem, they do not change the result. This has been tested up to 50,000 values too.
 
 ## Will it always terminate?
 **Yes.** Take for example the integer algorithm explained just above, when we start with a value `x`, the results of the function are upperbounded by `100 * num_digits(x)`. So eventually, all numbers will be seen, it is trivial! We are more interested in _what that number is_.
@@ -74,10 +75,12 @@ Up to 5,000,000:
 
 ![4](img/upto5000000.png) 
 
+Up to 50,000,000:
+
+![5](img/upto50000000.png) 
+
 The plots are particularly cool when the numbers are upto 500..0. It appears as if there is a giant castle forming before our eyes, which is burning at the bottom! _(squint your eyes for a better experience)_
 
 ## TODO:
-- [ ] Plot 5mil
-- [ ] Create b file
+- [ ] Create b files
 - [ ] Refurnish definitions
-- [ ] Is `str` to `int` faster than `10**a`?

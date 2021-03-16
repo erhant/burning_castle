@@ -5,40 +5,33 @@ rcParams.update({'figure.autolayout': True})
 
 SEQUENCE_NAME = "Burning Castle Sequence" 
  
-def compute(x: int, verbose: bool = False) -> int:
+def compute_verbose(x: int) -> int:
   '''
   This is the most verbose version. It can show you the progression.
   ''' 
   seens = {} # this is our dictionary, stored whether we have seen a number or not
-  def see(x):
-    seens[x] = True
-  num_digits = lambda x : len(str(x)) 
-  is_not_seen = lambda x : x not in seens 
-
-  while is_not_seen(x): 
-    see(x)
-    if verbose: 
-      print(x, "->", end=" ")    
-    if x == 0: 
-      x = 1
-    else:
-      x = abs((x << 1) - int('1' + '0'*num_digits(x)) ) 
-
-  if verbose: 
-    print(str(x)+"\n"+str(len(seens))+" values seen.") 
+  x = int(str(x).strip())    
+  while  x not in seens: 
+    seens[x] = True 
+    print(x, "->", end=" ")    
+    x = abs((x << 1) - (10 ** len(str(x))))
+    x = int(str(x).strip())
+ 
+  print(str(x)+"\n"+str(len(seens))+" values seen.") 
   return len(seens)
 
-def compute_optim(x : int): 
+def compute(x : int): 
   '''
   Simplest version using dictionary.  
   ''' 
-  seens = {} 
+  seens = {}  
   while x not in seens:  
     seens[x] = True
-    x = abs((x << 1) - int('1' + '0'*len(str(x)))) if x != 0 else 1     
+    x = abs((x << 1) - (10 ** len(str(x))))
   return len(seens)
+ 
 
-def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: bool = False, func = compute_optim):
+def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: bool = False, func = compute):
   '''
   Computes the sequence upto the given number. You can change the starting value with start kwarg.
 
@@ -68,8 +61,9 @@ def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: boo
     f.write(towrite) 
     f.close() 
 
+  return Y
 
 if __name__ == "__main__":
-  compute_all(500000, plot=True, func=compute_optim)
-  #compute(100, verbose=True)
-  #print(compute_optim(1000))
+  compute_all(50000000, plot=True, func=compute) 
+  #compute_verbose(100)
+  #print(compute(1000))
