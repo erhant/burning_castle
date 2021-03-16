@@ -3,87 +3,55 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams 
 rcParams.update({'figure.autolayout': True})
 
-SEQUENCE_NAME = "Burning Towers Sequence" 
-
-def compute_optim(x):
-  '''
-  A bit more concise, nothing verbose.
-  '''
-  if x == 0:
-    return 2 # 0.0 -> 1.0 -> 1.0 ... 
-
-  subDivTen = int('1'+'0'*(len(str(x))-1))
-  sub = (subDivTen << 3) + (subDivTen << 1)  # x * 10 = x * (8 + 2) = x * 2^3 + x *  2^1 = x << 3 + x << 1
-   
-  # memoize results 
-  memo = np.zeros(sub) # we can see at most "sub" many values
-  memo[x] = 1
-
-  seens = 1 
-  while True:
-    x = int(abs((x << 1) - sub))
-    if memo[x] == 1:
-      break
-    else:
-      seens += 1
-      memo[x] = 1
-      while x < subDivTen:
-        sub = subDivTen
-        subDivTen = int(sub/10) 
-
-  return seens
+SEQUENCE_NAME = "Burning Castle Sequence" 
  
-def compute(x, verbose=False): 
+def compute(x: int, verbose: bool = False) -> int:
   '''
-  Compute the Burning Tower value for 0.x. Note that 0.x >= 0.1 because x is an integer and it can't start with 0.
-  '''
-  if x == 0:
-    if verbose:
-      print("0 -> 1 -> 1")
-      print("2 unique values seen.") 
-    return 2  
-  #sub = 10**int(np.ceil(np.log10(x))) # this was the old formula, then I decided to use strings instead
-  sub = int('1'+'0'*(len(str(x))))
-  subDivTen = int(sub/10) 
+  This is the most verbose version. It can show you the progression.
+  ''' 
+  seens = {} # this is our dictionary, stored whether we have seen a number or not
+  def see(x):
+    seens[x] = True
+  num_digits = lambda x : len(str(x)) 
+  is_not_seen = lambda x : x not in seens 
 
-  # memoize results 
-  memo = np.zeros(sub) # we can see at most "sub" many values
-  memo[x] = 1
-
-  seens = 1 
-  if verbose:
-    print(x, "->", end=" ")
-  while True:
-    x = int(abs((x << 1) - sub))
-    if memo[x] == 1:
-      break
+  while is_not_seen(x): 
+    see(x)
+    if verbose: 
+      print(x, "->", end=" ")    
+    if x == 0: 
+      x = 1
     else:
-      seens += 1
-      memo[x] = 1
-      while x < subDivTen:
-        sub = subDivTen
-        subDivTen = int(sub/10)
-    if verbose:
-      print(x, "->", end=" ")
+      x = abs((x << 1) - int('1' + '0'*num_digits(x)) ) 
 
-  if verbose:  
-    print(x) 
-    print(seens,"unique values seen.") 
-  return seens
- 
+  if verbose: 
+    print(str(x)+"\n"+str(len(seens))+" values seen.") 
+  return len(seens)
 
-def compute_all(upto, start=0, plot=True, create_b_file=False):
+def compute_optim(x : int): 
+  '''
+  Simplest version using dictionary.  
+  ''' 
+  seens = {} 
+  while x not in seens:  
+    seens[x] = True
+    x = abs((x << 1) - int('1' + '0'*len(str(x)))) if x != 0 else 1     
+  return len(seens)
+
+def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: bool = False, func = compute_optim):
   '''
   Computes the sequence upto the given number. You can change the starting value with start kwarg.
 
   Set plot=True to see the results in a plot. 
   
   Set create_b_file=True to save the result to a b_file, refer to OEIS for more info.
+
+  Set func kwarg for a custom function.
   '''
   assert(start >= 0)
   assert(start < upto)
   X = range(start, upto+1)
-  Y = [compute_optim(x) for x in X]
+  Y = [func(x) for x in X]
   
   if plot:
     ax = plt.axes()
@@ -102,5 +70,6 @@ def compute_all(upto, start=0, plot=True, create_b_file=False):
 
 
 if __name__ == "__main__":
-  compute_all(100000, plot=True, create_b_file=True)
-  #compute(794, verbose=True)
+  compute_all(500000, plot=True, func=compute_optim)
+  #compute(100, verbose=True)
+  #print(compute_optim(1000))
