@@ -2,9 +2,9 @@
 This repository includes the code to obtain the Burning Castle Sequence.
 
 ## The Initial Algorithm
-For a given number `x` such that `0 <= x <= 1` (a real value in unit interval), we double the number and subtract 1, then take it's absolute value. Whenever the input has prepended zero(s) in its decimal expansion we remove the prepending zero(s) and shift the decimals to the left, which is equivalent to multiplying the number with 10 when it is less than 0.1. We do this **before** the `|2x-1|` operation.
+For a given decimal number `x` such that `0 <= x < 1`, we double the number and subtract 1, then take it's absolute value. Whenever the input has prepended zero(s) in its decimal part we remove the prepending zero(s) and shift the digits to the left, which is equivalent to multiplying the number with 10 when it is less than 0.1. We do this **before** the `|2x-1|` operation.
 
-Suppose that we do this operation recursively, and we keep track of the numbers that go into the `|2x-1|` operation. We only stop when we come across to a number that we have seen before. **What we return in the end is the total number of numbers seen throughout this process**. That is the _Burning Castle_ number! 
+Suppose that we do this operation recursively, and we keep track of the numbers that go into the `|2x-1|` operation, **ignoring the ones that have prepended zeros in it**. We only stop when we come across to a number that we have seen before. **What we return in the end is the total number of numbers seen throughout this process**. That is the _Burning Castle_ number! 
 
 This is described by the following algorithm:
 ```python

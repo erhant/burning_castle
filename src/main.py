@@ -10,22 +10,22 @@ def compute_verbose(x: int) -> int:
   This does not include the simulation for 1.0
   ''' 
   assert(x >= 0)
-  if (x == 0):
+  if x == 0:
     print("0 -> 1 -> 1\n2 values seen.")    
     return 2
   elif x == 5 or (str(x)[0] == '5' and int(str(x)[1:]) == 0):
     # 500...0
     print(x,"-> 0 -> 1 -> 1\n3 values seen.")
     return 3
-
-  seens = {} # this is our dictionary, stored whether we have seen a number or not 
-  while  x not in seens: 
-    seens[x] = True 
-    print(x, "->", end=" ")    
-    x = abs((x << 1) - (10 ** len(str(x)))) 
- 
-  print(str(x)+"\n"+str(len(seens))+" values seen.") 
-  return len(seens)
+  else:
+    seens = {} # this is our dictionary, stored whether we have seen a number or not 
+    while  x not in seens: 
+      seens[x] = True 
+      print(x, "->", end=" ")    
+      x = abs((x << 1) - (10 ** len(str(x)))) 
+  
+    print(str(x)+"\n"+str(len(seens))+" values seen.") 
+    return len(seens)
 
 def compute(x : int) -> int: 
   '''
@@ -34,17 +34,17 @@ def compute(x : int) -> int:
   This does not include the simulation for 1.0
   ''' 
   assert(x >= 0)
-  if (x == 0): 
+  if x == 0: 
     return 2
   elif x == 5 or (str(x)[0] == '5' and int(str(x)[1:]) == 0):
     # 500...0 
     return 3
-
-  seens = {}  
-  while x not in seens:  
-    seens[x] = True
-    x = abs((x << 1) - (10 ** len(str(x))))
-  return len(seens)
+  else:
+    seens = {}  
+    while x not in seens:  
+      seens[x] = True
+      x = abs((x << 1) - (10 ** len(str(x))))
+    return len(seens)
  
 
 def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: bool = False):
@@ -81,5 +81,5 @@ def compute_all(upto: int, start: int = 0, plot: bool = True, create_b_file: boo
   return Y
 
 if __name__ == "__main__":
-  compute_all(1000000, plot=True) 
-  #compute_verbose(5000)
+  #print(compute_all(100, plot=False))
+  compute_verbose(12)
