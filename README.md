@@ -45,25 +45,6 @@ Looking at the same examples above:
 - `2 -> 6 -> 2` (2 unique values)
 - `5 -> 0 -> 1 -> 1` (3 unique values)
 - `12 -> 76 -> 52 -> 4 -> 2 -> 6 -> 2` (6 unique values)
-
-There are some issues to be noted with this approach:
-
-### 1) What is 1.0?
-When we use the integer `0`, we simulate the behaviour of `0.0`. When we use `1`, we simulate `0.1`. What about `1.0`? To handle this, we need to put a special condition for when we obtain a `0`. Every integer we have here corresponds to some number in the interval `[0, 1)`, and the operations are closed within this interval. We had initially defined our problem over `[0, 1]`, so how do account for the `1`? Well, no number other than `0` can ever get to `1` in the decimal setting. So `1.0` will never be seen before we get to `0.0`, of course assuming the input was not `1.0`. So for the integers, we can always assume the decimal `1.0` was not seen so far, and when `0` is seen, we just complete the process by saying `1.0` will be seen next and then the process will stop, because `1.0` immediately loops back to itself. 
-
-In other words, when we get to integer `0`, with `n` seen values including `0`, we return `n+1` to account for the `1`.
-
-There is more to this actually, we only get to `0` when the input `x` to `|2x-1|` is `0.5`. In the integer setting, this corresponds to the numbers `5, 50, 500, ...`. The sequence for them will always be like `0.5 -> 0.0 -> 1.0 -> 1.0`, i.e. 3 unique values only. 
-
-Thanks to this information, we can just take care of these values (i.e. `0`, `5`, `50`, `500`, ...) before we begin the loop in our implementation.
-
-### 2) Appended Zeros?
-Note that `0.1` and `0.10` are the same values, but as integers we get `1` and `10`, which are different. Thankfully this does not pose a problem: accounting for them or not does not change the result.
-
-To show this, consider a value `x` for the operation `|2*x - 10^(num_digits(x))|`. Suppose `x` has `d` digits, so we do `|2x-10^d|`. Now consider `(10^k)*x` which is `x` but has `k` 0s appended to it. As a result, it has `d+k` digits. Now our operation is `|2(10^k)x - 10^(k+d)|` which is equal to `|(10^k)(2x-10^d)|`. If the input has appended zeros, the result will have them too. This does not change the result, because whatever sequence `x` has, `x` with appended zeros will have the same sequence, therefore will return the same amount of unique values seen.
-
-### 3) Will it always terminate?
-**Yes.** The stopping condition of the algorithm is when we see a number we have seen before. The operation is closed within a finite set, so it is trivial that it should terminate eventually. We are thus interested in how long the iterations are, i.e. how many different numbers we have seen?
  
 ## Plots
 The integer algorithm actually defines an integer sequence!
