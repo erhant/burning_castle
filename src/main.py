@@ -95,8 +95,8 @@ def compute(upto: int, offset: int, plot: bool = True, bfile_name: str = None, a
   if plot:
     ax = plt.axes()
     ax.scatter(X, Y, c='black') 
-    ax.set_xlabel("Number")
-    ax.set_ylabel("Iterations") 
+    ax.set_xlabel("n")
+    ax.set_ylabel("a(n)") 
     plt.show() 
 
   if bfile_name != None:
@@ -109,4 +109,4 @@ def compute(upto: int, offset: int, plot: bool = True, bfile_name: str = None, a
   return Y
 
 if __name__ == "__main__":
-  compute(5000, 0, a=A342631) 
+  compute(5000, 0, a=A343275) 
