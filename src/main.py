@@ -109,4 +109,4 @@ def compute(upto: int, offset: int, plot: bool = True, bfile_name: str = None, a
   return Y
 
 if __name__ == "__main__":
-  compute(5000, 0, a=A343274) 
+  compute(5000, 0, a=A342631) 
