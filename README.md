@@ -9,7 +9,7 @@ This repository includes codes and plots for the following OEIS submissions:
 
 ![5000_s1](img/upto5000.png) 
 
-- **Formerly A343274, removed and recycled for being too artificial**: `a(n)` is the number of distinct values in the recursive iterations of `f(x) = f(|2x-1|)` starting from a real number  `x` where `x = 0` or `0.1 <= x < 1`, `n` is the fractional part of the decimal `x`. The only difference between the sequence above and this one is the `g` function inside `f`; however, that significantly changes the resulting plot.
+- **Formerly A343274, removed and recycled for being too artificial** `a(n)` is the number of distinct values in the recursive iterations of `f(x) = f(|2x-1|)` starting from a real number  `x` where `x = 0` or `0.1 <= x < 1`, `n` is the fractional part of the decimal `x`. The only difference between the sequence above and this one is the `g` function inside `f`; however, that significantly changes the resulting plot.
 
 ![5000_s2](img/upto5000_2.png) 
 
