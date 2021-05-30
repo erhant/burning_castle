@@ -45,8 +45,10 @@ def formerly_A342631(n : int) -> int:
   '''
   a(n) = number of distinct values in the recursive iterations of 
   f(x) = f(g(|2x-1|)) starting from a real number x where x = 0 or 
-  0.1 <= x < 1, n is the decimal part of x, and g(x) removes 
+  0.1 <= x < 1, n is the fractional part of x, and g(x) removes 
   prepending zeros of x.
+
+  Equivalently, x = n/10^(num digits in n)
   '''
   seens = {}  
   while n not in seens:  
@@ -62,7 +64,9 @@ def formerly_A343274(n : int) -> int:
   '''
   a(n) = number of distinct values in the recursive iterations of 
   f(x) = f(|2x-1|) starting from a real number x where x = 0 or 
-  0.1 <= x < 1, n is the decimal part of x.
+  0.1 <= x < 1, n is the fractional part of x.
+
+  Equivalently, x = n/10^(num digits in n)
   '''
   init_len = len(str(n)) 
   sub = 10 ** init_len
@@ -82,31 +86,29 @@ def A343275(n : int) -> int:
   return abs((n << 1) - (10 ** len(str(n))))
 
 def compute(upto: int, offset: int, plot: bool = True, bfile_name: str = None, a : callable = A343275):
-  '''Computes the sequence upto the given number with an offset.
+  '''Computes the sequence for numbers in range [offset, upto]
 
-  Set plot=True to see the results in a plot. Set create_b_file to a string to save the result to a b_file as str_upto, refer to OEIS for more info.
+  Set plot=True to see the results in a plot. 
+  Set bfile_name kwarg to output a b file for OEIS.
   Set a kwarg for a custom sequence. 
   '''  
   assert(offset < upto)
     
-  X = range(offset, upto+1) # inclusive
-  Y = [a(n) for n in X]
+  N = range(offset, upto+1) # inclusive
+  A_N = [a(n) for n in N]
   
   if plot:
     ax = plt.axes()
-    ax.scatter(X, Y, c='black') 
+    ax.scatter(N, A_N, c='black') 
     ax.set_xlabel("n")
     ax.set_ylabel("a(n)") 
     plt.show() 
 
   if bfile_name != None:
-    # b_file is for OEIS. It is a file
-    towrite = '\n'.join([str(x) + " " + str(y) for x, y in zip(X, Y)])
-    f = open("out/b"+bfile_name+"_"+str(upto)+".txt","w") 
+    towrite = '\n'.join([str(n) + " " + str(a_n) for n, a_n in zip(N, A_N)])
+    f = open("out/"+bfile_name,"w") 
     f.write(towrite) 
     f.close() 
 
-  return Y
-
 if __name__ == "__main__":
-  compute(5000, 0, a=A343275) 
+  compute(10000, 1, bfile_name='b343275.txt', a=A343275) 
